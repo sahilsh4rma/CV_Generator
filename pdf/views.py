@@ -21,19 +21,6 @@ def accept(request):
         profile.save()
     return render(request,'pdf/accept.html')
 
-# def resume(request,id):
-#     user_profile = Profile.objects.get(pk = id)
-#     template = loader.get_template('pdf/resume.html')
-#     html = template.render({'user_profile':user_profile})
-#     options = {
-#         'page-size': 'Letter',
-#          'encoding': 'UTF-8'
-#     }
-#     pdf = pdfkit.from_string(html,False,options)
-#     response = HttpResponse(pdf,content_type = "application/pdf")
-#     response['Content-Disposition'] = 'attachment'
-#     filename = 'resume.pdf'
-#     return response
 def resume(request,id):
     #same as before
     user_profile = Profile.objects.get(pk=id)
@@ -46,11 +33,14 @@ def resume(request,id):
     #SET TO UR PATH
     config = pdfkit.configuration(wkhtmltopdf=r'C:\wkhtmltox-0.12.6-1.mxe-cross-win64\bin\wkhtmltopdf.exe')
  
-    #Must be 'option=options' and add 'configuration=config'
     pdf = pdfkit.from_string(html,False,options=options,configuration=config)
     response = HttpResponse(pdf,content_type='application/pdf')
  
-    #filename must be included in contentdisposition
+    #filename 
     response['Content-Disposition'] ='attachment;filename=resume.pdf'
  
     return response
+
+def list(request):
+    list = Profile.objects.all()
+    return render(request,'pdf/profile_list.html',{'list':list})

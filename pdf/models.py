@@ -12,3 +12,6 @@ class Profile(models.Model):
     university = models.CharField(max_length = 200)
     previous_work = models.CharField(max_length = 2000)
     skills = models.CharField(max_length = 2000)
+
+    def __str__(self):
+        return self.name
